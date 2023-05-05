@@ -7,11 +7,28 @@ namespace ToDoList.Core
 	{
         public ObservableCollection<UserTaskViewModel> UserTaskList { get; set; } = new ObservableCollection<UserTaskViewModel>();
 
-        public string? NewUserTaskTitle { get; set; }
+		private string? _newUserTaskTitle;
 
-        public string? NewUserTaskDescription { get; set; }
+		public string? NewUserTaskTitle
+		{
+			get { return this._newUserTaskTitle; }
+			set { this._newUserTaskTitle = value; OnPropertyChanged(nameof(NewUserTaskTitle)); }
+		}
 
-        public DateTime NewUserTaskDeadline { get; set; } = DateTime.Now;
+		private string? _newUserTaskDescription;
+		public string? NewUserTaskDescription
+		{
+			get { return this._newUserTaskDescription; }
+			set { this._newUserTaskDescription = value; OnPropertyChanged(nameof(NewUserTaskDescription)); }
+		}
+
+        private DateTime? _newUserTaskDeadline = DateTime.Now;
+
+        public DateTime? NewUserTaskDeadline
+        {
+            get { return this._newUserTaskDeadline; }
+            set { this._newUserTaskDeadline = value; OnPropertyChanged(nameof(NewUserTaskDeadline)); }
+        }
 
         public ICommand AddNewUserTaskCommand { get; set; }
 
@@ -36,10 +53,6 @@ namespace ToDoList.Core
             NewUserTaskTitle = string.Empty;
             NewUserTaskDescription = string.Empty;
             NewUserTaskDeadline = DateTime.Now;
-
-            OnPropertyChanged(nameof(NewUserTaskTitle));
-            OnPropertyChanged(nameof(NewUserTaskDescription));
-            OnPropertyChanged(nameof(NewUserTaskDeadline));
         }
 
         public void RemoveSelectedUserTasks()
