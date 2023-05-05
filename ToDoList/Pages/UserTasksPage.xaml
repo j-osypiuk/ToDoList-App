@@ -1,0 +1,49 @@
+﻿<Page x:Class="ToDoList.UserTasksPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ToDoList"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:dc="clr-namespace:ToDoList.Core;assembly=ToDoList.Core"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UserTasksPage">
+
+    <Grid>
+        <Grid.DataContext>
+            <dc:UserTaskPageViewModel></dc:UserTaskPageViewModel>
+        </Grid.DataContext>
+        <StackPanel HorizontalAlignment="Center">
+
+            <TextBlock>These are your tasks</TextBlock>
+
+            <ScrollViewer Height="300" Width="250">
+                <ItemsControl ItemsSource="{Binding UserTaskList}" Margin="10">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:UserTask></local:UserTask>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <TextBlock Text="Task title"></TextBlock>
+            <TextBox Text="{Binding NewUserTaskTitle}"></TextBox>
+
+            <TextBlock Text="Task description"></TextBlock>
+            <TextBox Text="{Binding NewUserTaskDescription}"></TextBox>
+
+            <TextBlock Text="Task deadline"></TextBlock>
+            <DatePicker SelectedDate="{Binding NewUserTaskDeadline}"></DatePicker>
+            
+            
+            
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding AddNewUserTaskCommand}" Content="Add"></Button>
+                <Button Command="{Binding RemoveSelectedUserTasksCommand}" Content="Delete"></Button>
+            </StackPanel>
+        </StackPanel>
+       
+    </Grid>
+</Page>

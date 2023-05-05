@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        MinHeight="500"
+        MinWidth="700"
+        Title="To do list" Height="450" Width="800">
+    
+    <local:UserTasksPage></local:UserTasksPage>
 </Window>
