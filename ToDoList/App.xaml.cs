@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ToDoList.Core;
+using ToDoList.Database;
 
 namespace ToDoList
 {
@@ -13,5 +15,15 @@ namespace ToDoList
 	/// </summary>
 	public partial class App : Application
 	{
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			base.OnStartup(e);
+
+			var database = new ToDoListDbContext();
+
+			database.Database.EnsureCreated();
+
+			DatabaseConnector.database = database;
+		}
 	}
 }

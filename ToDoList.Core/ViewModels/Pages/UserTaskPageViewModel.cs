@@ -1,15 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ToDoList;
+using ToDoList.Database;
 
 namespace ToDoList.Core
 {
 	public class UserTaskPageViewModel : BaseViewModel
 	{
-        public ObservableCollection<UserTaskViewModel> UserTaskList { get; set; } = new ObservableCollection<UserTaskViewModel>() { 
-            new UserTaskViewModel() {Title="Go to shopping", Description="Go to shop for food", Deadline=DateTime.Now},
-			new UserTaskViewModel() {Title="Go to school", Description="Go to school for education", Deadline=DateTime.Now}
-		};
+        public ObservableCollection<UserTaskViewModel> UserTaskList { get; set; } = new ObservableCollection<UserTaskViewModel>();
 
 		private string? _newUserTaskTitle;
 
@@ -42,10 +40,21 @@ namespace ToDoList.Core
         {
 			AddNewUserTaskCommand = new RelayCommand(AddNewUserTask);
             RemoveSelectedUserTasksCommand = new RelayCommand(RemoveSelectedUserTasks);
+
+            foreach(var userTask in DatabaseConnector.database.UserTasks.ToList())
+            {
+                UserTaskList.Add(new UserTaskViewModel
+                {
+                    Id = userTask.Id,
+                    Title = userTask.Title,
+                    Description = userTask.Description,
+                    Deadline = userTask.Deadline,
+                });
+            }
         }
         public void AddNewUserTask()
         {
-            var newUserTask = new UserTaskViewModel()
+            var newUserTask = new UserTaskViewModel
             {
                 Title = NewUserTaskTitle,
                 Description = NewUserTaskDescription,
@@ -53,6 +62,15 @@ namespace ToDoList.Core
 
             };
             UserTaskList.Add(newUserTask);
+
+            DatabaseConnector.database.UserTasks.Add(new UserTask
+            {
+                Title = newUserTask.Title,
+                Description = newUserTask.Description,
+                Deadline = newUserTask.Deadline,
+            });
+
+            DatabaseConnector.database.SaveChanges();
 
             NewUserTaskTitle = string.Empty;
             NewUserTaskDescription = string.Empty;
@@ -66,7 +84,15 @@ namespace ToDoList.Core
 			foreach (var userTask in selectedTasks)
             {
                 UserTaskList.Remove(userTask);
+
+                var task = DatabaseConnector.database.UserTasks.FirstOrDefault(ut => ut.Id == userTask.Id);
+                if (task != null)
+                {
+                    DatabaseConnector.database.UserTasks.Remove(task);
+                }
             }
+
+            DatabaseConnector.database.SaveChanges();
         }
 	}
 }
