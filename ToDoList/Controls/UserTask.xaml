@@ -7,13 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <CheckBox IsChecked="{Binding IsSelected}"></CheckBox>
-            <StackPanel>
-                <TextBlock Text="{Binding Title}"></TextBlock>
-                <TextBlock Text="{Binding Description}"></TextBlock>
-                <TextBlock Text="{Binding Deadline, StringFormat={}{0:dd.MM.yyyy}}"></TextBlock>
-            </StackPanel>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="9*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding Title}" Grid.Row="0" FontSize="35" FontWeight="Bold"></TextBlock>
+        <TextBlock Text="{Binding Deadline, StringFormat={}{0:dd.MM.yyyy}}" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"></TextBlock>
+        <TextBlock Text="{Binding Description}" Grid.Row="1" FontSize="15"></TextBlock>
+        <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
     </Grid>
 </UserControl>

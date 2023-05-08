@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ToDoList"
-      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:dc="clr-namespace:ToDoList.Core;assembly=ToDoList.Core"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -16,9 +15,9 @@
         </Grid.DataContext>
         <StackPanel HorizontalAlignment="Center">
 
-            <TextBlock>These are your tasks</TextBlock>
+            <TextBlock Text="These are your tasks" FontSize="30" FontWeight="UltraBold"></TextBlock>
 
-            <ScrollViewer Height="300" Width="250">
+            <ScrollViewer Width="900" Height="550">
                 <ItemsControl ItemsSource="{Binding UserTaskList}" Margin="10">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -28,22 +27,41 @@
                 </ItemsControl>
             </ScrollViewer>
 
+
             <TextBlock Text="Task title"></TextBlock>
-            <TextBox Text="{Binding NewUserTaskTitle}"></TextBox>
+            <TextBox Text="{Binding NewUserTaskTitle}" Height="30" VerticalContentAlignment="Center" >
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
 
             <TextBlock Text="Task description"></TextBlock>
-            <TextBox Text="{Binding NewUserTaskDescription}"></TextBox>
+            <TextBox Text="{Binding NewUserTaskDescription}" Height="30" VerticalContentAlignment="Center" >
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
 
             <TextBlock Text="Task deadline"></TextBlock>
-            <DatePicker SelectedDate="{Binding NewUserTaskDeadline}"></DatePicker>
-            
-            
-            
+            <DatePicker SelectedDate="{Binding NewUserTaskDeadline}" Height="30" VerticalContentAlignment="Center">
+                <DatePicker.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding AddNewUserTaskCommand}" Content="Add"></Button>
                 <Button Command="{Binding RemoveSelectedUserTasksCommand}" Content="Delete"></Button>
             </StackPanel>
         </StackPanel>
+        
+        
        
     </Grid>
 </Page>

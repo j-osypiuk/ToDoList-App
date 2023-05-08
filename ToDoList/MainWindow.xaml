@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList"
         mc:Ignorable="d"
-        MinHeight="500"
-        MinWidth="700"
-        Title="To do list" Height="450" Width="800">
-    
+        MinHeight="700"
+        MinWidth="1000"
+        WindowState="Maximized"
+        Title="To do list" >
+
     <local:UserTasksPage></local:UserTasksPage>
 </Window>

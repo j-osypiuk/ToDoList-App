@@ -1,11 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using ToDoList;
 
 namespace ToDoList.Core
 {
 	public class UserTaskPageViewModel : BaseViewModel
 	{
-        public ObservableCollection<UserTaskViewModel> UserTaskList { get; set; } = new ObservableCollection<UserTaskViewModel>();
+        public ObservableCollection<UserTaskViewModel> UserTaskList { get; set; } = new ObservableCollection<UserTaskViewModel>() { 
+            new UserTaskViewModel() {Title="Go to shopping", Description="Go to shop for food", Deadline=DateTime.Now},
+			new UserTaskViewModel() {Title="Go to school", Description="Go to school for education", Deadline=DateTime.Now}
+		};
 
 		private string? _newUserTaskTitle;
 
@@ -46,7 +50,7 @@ namespace ToDoList.Core
                 Title = NewUserTaskTitle,
                 Description = NewUserTaskDescription,
                 Deadline = NewUserTaskDeadline,
-             
+
             };
             UserTaskList.Add(newUserTask);
 
