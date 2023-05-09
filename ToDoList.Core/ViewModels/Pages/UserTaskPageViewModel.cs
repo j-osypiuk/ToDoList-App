@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Numerics;
 using System.Windows.Input;
+using System.Xml.Linq;
 using ToDoList;
 using ToDoList.Database;
 
@@ -24,9 +26,9 @@ namespace ToDoList.Core
 			set { this._newUserTaskDescription = value; OnPropertyChanged(nameof(NewUserTaskDescription)); }
 		}
 
-        private DateTime? _newUserTaskDeadline = DateTime.Now;
+        private DateTime _newUserTaskDeadline = DateTime.Now;
 
-        public DateTime? NewUserTaskDeadline
+        public DateTime NewUserTaskDeadline
         {
             get { return this._newUserTaskDeadline; }
             set { this._newUserTaskDeadline = value; OnPropertyChanged(nameof(NewUserTaskDeadline)); }
@@ -36,10 +38,12 @@ namespace ToDoList.Core
 
         public ICommand RemoveSelectedUserTasksCommand { get; set; }
 
+        public ICommand SortByDateUserTasksCommand { get; set; }
         public UserTaskPageViewModel()
         {
 			AddNewUserTaskCommand = new RelayCommand(AddNewUserTask);
             RemoveSelectedUserTasksCommand = new RelayCommand(RemoveSelectedUserTasks);
+            SortByDateUserTasksCommand = new RelayCommand(SortByDateUserTasks);
 
             foreach(var userTask in DatabaseConnector.database.UserTasks.ToList())
             {
@@ -72,7 +76,9 @@ namespace ToDoList.Core
 
             DatabaseConnector.database.SaveChanges();
 
-            NewUserTaskTitle = string.Empty;
+            GetUserTasks();
+
+			NewUserTaskTitle = string.Empty;
             NewUserTaskDescription = string.Empty;
             NewUserTaskDeadline = DateTime.Now;
         }
@@ -94,5 +100,30 @@ namespace ToDoList.Core
 
             DatabaseConnector.database.SaveChanges();
         }
+
+        public void SortByDateUserTasks()
+        {
+            var sortedList = new List<UserTaskViewModel>(UserTaskList);
+            sortedList.Sort((x1, x2) => DateTime.Compare(x1.Deadline, x2.Deadline));
+
+            UserTaskList = new ObservableCollection<UserTaskViewModel>(sortedList);
+            OnPropertyChanged(nameof(UserTaskList));
+		}
+
+        public void GetUserTasks()
+        {
+			int i = 0;
+			foreach (var userTask in DatabaseConnector.database.UserTasks.ToList())
+			{
+				UserTaskList[i] = new UserTaskViewModel
+				{
+					Id = userTask.Id,
+					Title = userTask.Title,
+					Description = userTask.Description,
+					Deadline = userTask.Deadline,
+				};
+				i++;
+			}
+		}
 	}
 }
