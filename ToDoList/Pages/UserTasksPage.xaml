@@ -6,30 +6,43 @@
       xmlns:local="clr-namespace:ToDoList"
       xmlns:dc="clr-namespace:ToDoList.Core;assembly=ToDoList.Core"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      Background="#1E1E1E"
       Title="UserTasksPage">
+
+    <Page.Resources>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="#424242"/>
+            <Setter Property="Opacity" Value="0.3"/>
+        </Style>
+    </Page.Resources>
 
     <Grid>
         <Grid.DataContext>
             <dc:UserTaskPageViewModel></dc:UserTaskPageViewModel>
         </Grid.DataContext>
+
         <StackPanel HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" MaxWidth="900" Margin="0,10,0,0">
+                <TextBlock Text="These are your tasks" Style="{StaticResource AppHeader}"/>
+                <Button Command="{Binding RemoveSelectedUserTasksCommand}" Content="Delete" Style="{StaticResource DeleteButton}"/>
+                <Button Command="{Binding RemoveSelectedUserTasksCommand}" Content="Sort" Style="{StaticResource SortButton}"/>
+            </StackPanel>
 
-            <TextBlock Text="These are your tasks" FontSize="30" FontWeight="UltraBold"></TextBlock>
-
-            <ScrollViewer Width="900" Height="550">
+            <ScrollViewer Width="900" Height="480" >
                 <ItemsControl ItemsSource="{Binding UserTaskList}" Margin="10">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:UserTask></local:UserTask>
+                            <Border BorderThickness="3" BorderBrush="#4f4f4f" Background="#424242" CornerRadius="20" Margin="0, 0, 0, 20">
+                                <local:UserTask></local:UserTask>
+                            </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
 
 
-            <TextBlock Text="Task title"></TextBlock>
-            <TextBox Text="{Binding NewUserTaskTitle}" Height="30" VerticalContentAlignment="Center" >
+            <TextBlock Text="Task title" Style="{StaticResource LabelTextBlock}"></TextBlock>
+            <TextBox Text="{Binding NewUserTaskTitle}" Style="{StaticResource DefaultTextBox}">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -37,8 +50,8 @@
                 </TextBox.Resources>
             </TextBox>
 
-            <TextBlock Text="Task description"></TextBlock>
-            <TextBox Text="{Binding NewUserTaskDescription}" Height="30" VerticalContentAlignment="Center" >
+            <TextBlock Text="Task description" Style="{StaticResource LabelTextBlock}"></TextBlock>
+            <TextBox Text="{Binding NewUserTaskDescription}" Style="{StaticResource DefaultTextBox}">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -46,22 +59,18 @@
                 </TextBox.Resources>
             </TextBox>
 
-            <TextBlock Text="Task deadline"></TextBlock>
-            <DatePicker SelectedDate="{Binding NewUserTaskDeadline}" Height="30" VerticalContentAlignment="Center">
+            <TextBlock Text="Task deadline" Style="{StaticResource LabelTextBlock}"></TextBlock>
+            <DatePicker SelectedDate="{Binding NewUserTaskDeadline}" Foreground="#DADAE8" Background="#3E3E40" >
                 <DatePicker.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
+                    <Style TargetType="{x:Type DatePickerTextBox}">
+                        <Setter Property="Background" Value="Transparent"></Setter>
+                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
                     </Style>
                 </DatePicker.Resources>
             </DatePicker>
 
-            <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding AddNewUserTaskCommand}" Content="Add"></Button>
-                <Button Command="{Binding RemoveSelectedUserTasksCommand}" Content="Delete"></Button>
-            </StackPanel>
+            <Button Command="{Binding AddNewUserTaskCommand}" Content="Add" Style="{StaticResource AddButton}"></Button>
+
         </StackPanel>
-        
-        
-       
     </Grid>
 </Page>

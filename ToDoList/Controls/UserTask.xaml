@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ToDoList"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Style="{StaticResource DefaultUserTask}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="9*"></ColumnDefinition>
@@ -16,9 +16,9 @@
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Title}" Grid.Row="0" FontSize="35" FontWeight="Bold"></TextBlock>
-        <TextBlock Text="{Binding Deadline, StringFormat={}{0:dd.MM.yyyy}}" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"></TextBlock>
-        <TextBlock Text="{Binding Description}" Grid.Row="1" FontSize="15"></TextBlock>
-        <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+        <TextBlock Text="{Binding Title}" Style="{StaticResource UserTaskTitle}"></TextBlock>
+        <TextBlock Text="{Binding Deadline, StringFormat={}{0:dd.MM.yyyy}}" Style="{StaticResource UserTaskDeadline}"></TextBlock>
+        <TextBlock Text="{Binding Description}" Style="{StaticResource UserTaskDescription}"></TextBlock>
+        <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
     </Grid>
 </UserControl>
